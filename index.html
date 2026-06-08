@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>龙岛军团排行榜</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0c0c2e 0%, #1a1a3e 50%, #0c0c2e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(15, 15, 45, 0.85);
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7),
+                        0 0 0 1px rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        /* 装饰元素 */
+        .decoration {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .decoration:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(106, 17, 203, 0.2) 0%, transparent 70%);
+            top: -150px;
+            right: -100px;
+        }
+        
+        .decoration:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(29, 209, 161, 0.15) 0%, transparent 70%);
+            bottom: -80px;
+            left: -80px;
+        }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 彩色标题样式 */
+        .title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, 
+                #ff0080, 
+                #ff8c00, 
+                #40e0d0, 
+                #ff0080);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradientShift 4s ease infinite;
+            text-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+            letter-spacing: 1px;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 60px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        /* 按钮容器 */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        /* 彩色渐变按钮样式 */
+        .gradient-btn {
+            position: relative;
+            padding: 22px 40px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-width: 280px;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transition: opacity 0.4s ease;
+            opacity: 1;
+        }
+        
+        .gradient-btn:hover::before {
+            opacity: 0.9;
+        }
+        
+        .gradient-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+        
+        .gradient-btn:active {
+            transform: translateY(-4px);
+        }
+        
+        /* 第一个按钮 - 龙岛异兽军团排行榜 */
+        .btn-dragon {
+            background: linear-gradient(90deg, #ff0080, #ff8c00);
+            color: white;
+        }
+        
+        .btn-dragon::before {
+            background: linear-gradient(90deg, #ff0080, #ff8c00);
+        }
+        
+        /* 第二个按钮 - 诅咒之岛军团排行榜 */
+        .btn-curse {
+            background: linear-gradient(90deg, #40e0d0, #20b2aa);
+            color: white;
+        }
+        
+        .btn-curse::before {
+            background: linear-gradient(90deg, #40e0d0, #20b2aa);
+        }
+        
+        /* 图标样式 */
+        .btn-icon {
+            font-size: 1.6rem;
+        }
+        
+        /* 底部信息 */
+        .footer {
+            margin-top: 60px;
+            color: #666;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .gradient-btn {
+                width: 100%;
+                max-width: 350px;
+                padding: 20px 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .gradient-btn {
+                min-width: unset;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 装饰元素 -->
+        <div class="decoration"></div>
+        <div class="decoration"></div>
+        
+        <div class="content">
+            <!-- 彩色标题 -->
+            <h1 class="title">龙岛军团排行榜</h1>
+            <p class="subtitle">选择您要访问的排行榜</p>
+            
+            <!-- 按钮区域 -->
+            <div class="buttons-container">
+                <!-- 第一个按钮 - 龙岛异兽军团排行榜 -->
+                <!-- 在这里修改跳转链接：将 href="#" 替换为您的实际网址 -->
+                <a href="https://example.com/dragon-island" class="gradient-btn btn-dragon">
+                    <i class="fas fa-dragon btn-icon"></i>
+                    <span>龙岛异兽军团排行榜</span>
+                </a>
+                
+                <!-- 第二个按钮 - 诅咒之岛军团排行榜 -->
+                <!-- 在这里修改跳转链接：将 href="#" 替换为您的实际网址 -->
+                <a href="https://example.com/cursed-island" class="gradient-btn btn-curse">
+                    <i class="fas fa-skull-crossbones btn-icon"></i>
+                    <span>诅咒之岛军团排行榜</span>
+                </a>
+            </div>
+            
+            <!-- 底部信息 -->
+            <div class="footer">
+                <p>© 2023 龙岛军团排行榜 | 数据实时更新</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 为按钮添加点击反馈效果
+        document.querySelectorAll('.gradient-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // 创建涟漪效果
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.7);
+                    transform: scale(0);
+                    animation: ripple-animation 0.6s linear;
+                    width: ${size}px;
+                    height: ${size}px;
+                    top: ${y}px;
+                    left: ${x}px;
+                    pointer-events: none;
+                `;
+                
+                this.appendChild(ripple);
+                
+                // 移除涟漪元素
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
+
